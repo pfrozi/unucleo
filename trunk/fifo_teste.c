@@ -30,7 +30,7 @@ int main(int argc, char* argv[]) {
     printf("Consultando o PCB:");
     e = consulta_fifo(&f);
     imprime_pcb(e->pcb);
-    printf("teste consulta:\n");
+    printf("teste pedro:\n");
     imprime_pcb(f.prim->pcb);
     printf("\n");
 
