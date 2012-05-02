@@ -3,43 +3,33 @@
 #include "fifo.h"
 #include "unucleo.h"
 
-void teste1()
-{
+void teste1() {
     int i = 30;
-    for(;i>0;i--)
-    {
+    for(;i>0;i--) {
         printf("Sou o teste 1 de prio 1 e vou executar mais %d vezes\n",i);
     }
 }
-void teste2()
-{
+void teste2() {
     int i = 25;
-    for(;i>0;i--)
-    {
+    for(;i>0;i--) {
         printf("Sou o teste 2 de prio 1 e vou executar mais %d vezes\n",i);
     }
 }
-void teste3()
-{
+void teste3() {
     int i = 20;
-    for(;i>0;i--)
-    {
+    for(;i>0;i--) {
         printf("Sou o teste 3 de prio 1 e vou executar mais %d vezes\n",i);
     }
 }
-void teste4()
-{
+void teste4() {
     int i = 15;
-    for(;i>0;i--)
-    {
+    for(;i>0;i--) {
         printf("Sou o teste 4 de prio 2 e vou executar mais %d vezes\n",i);
     }
 }
-void teste5()
-{
+void teste5() {
     int i = 15;
-    for(;i>0;i--)
-    {
+    for(;i>0;i--) {
         printf("Sou o teste 5 de prio 2 e vou executar mais %d vezes\n",i);
     }
 }
