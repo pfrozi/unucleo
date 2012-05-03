@@ -10,9 +10,6 @@ PCB         executando;                                                         
 FIFO_DESC   fifo_aptos[PRIORIDADES];                                            // Os processos APTOS são separados em filas por prioridades
 FIFO_DESC   fifo_bloqs;                                                         // Os processos bloqueados ficam numa lista
 
-// Pilhas
-char all_stack[MAX_PROC][SIGSTKSZ];
-
 /* Variáveis globais que armazenam informções do unucleo */
 ucontext_t scheduler_context;                                                   // Armazena o contexto do escalonador para retorno das funções
 int        pidCount;                                                            // Número de processos ativos
@@ -22,7 +19,7 @@ int        pidCount;                                                            
  //Verifica se tinha algum processo esperando o processo que esta executando, retorna -1 se não houver ninguem
  int verifica_waiters()
  {
-    int ret=-1;                                                                 // pid do waiter, retorna -1 se não existir        
+    int ret=-1;                                                                 // pid do waiter, retorna -1 se não existir
     if(fifo_bloqs.prim != NULL)
         ret = has_waiter(&fifo_bloqs,executando.pid);                           // verifica se possui alguem esperando pelo processo que esta no estado running
     return ret;
@@ -37,6 +34,7 @@ int        pidCount;                                                            
         if(busca_pcb(&fifo_bloqs,pid_bloq,&pcb_bloq)!=-1){                      // armazena pcb que vai ser liberado na variavel
 
             remove_pcb(&fifo_bloqs,pid_bloq);                                   //exclui determinado PCB da lista de bloqueados
+            pcb_bloq.estado = APTO;
             insere_fifo(&fifo_aptos[pcb_bloq.prio], pcb_bloq);
             }
         pid_bloq = verifica_waiters();
@@ -102,8 +100,8 @@ int libsisop_init()
     ini_make(&scheduler_context);
 	getcontext(&scheduler_context);
 
-	scheduler_context.uc_stack.ss_sp    = all_stack[0];
-	scheduler_context.uc_stack.ss_size  = sizeof(all_stack[0]);
+	scheduler_context.uc_stack.ss_sp    = (char*)malloc(SIGSTKSZ*sizeof(char));
+	scheduler_context.uc_stack.ss_size  = SIGSTKSZ*sizeof(char);
     scheduler_context.uc_link = NULL;
 
 	return 0;
@@ -126,6 +124,7 @@ int mproc_create(int prio, void *(*start_routine)(void*), void *arg)
 	pcb_add.pid  = pidCount;
 	pcb_add.prio = prio;
 	pcb_add.pid_wait = -1;
+	pcb_add.estado = APTO;
 	pcb_add.contexto=(ucontext_t*)malloc(sizeof(ucontext_t));
     pidCount++;
 
@@ -135,8 +134,8 @@ int mproc_create(int prio, void *(*start_routine)(void*), void *arg)
 	ini_make(pcb_add.contexto);
 	getcontext(pcb_add.contexto);
 
-	pcb_add.contexto->uc_stack.ss_sp    = all_stack[pidCount];
-	pcb_add.contexto->uc_stack.ss_size  = sizeof(all_stack[pidCount]);
+	pcb_add.contexto->uc_stack.ss_sp    = (char *)malloc(SIGSTKSZ*sizeof(char));
+	pcb_add.contexto->uc_stack.ss_size  = SIGSTKSZ*sizeof(char);
     pcb_add.contexto->uc_link = &scheduler_context;
 
 	makecontext(pcb_add.contexto, (void (*)(void)) start_routine, 1, arg);
@@ -152,6 +151,7 @@ int mproc_join(int pid)
 {
 
     executando.pid_wait = pid;
+    executando.estado = BLOQ;
     insere_fifo(&fifo_bloqs,executando);
 
     swapcontext(executando.contexto,&scheduler_context);
@@ -163,12 +163,17 @@ int mproc_join(int pid)
 void mproc_yield(void)
 {
 
-
+        executando.estado = APTO;
         insere_fifo(&fifo_aptos[executando.prio], executando);
         swapcontext(executando.contexto,&scheduler_context);
 
 }
 
+void destroi_exec()
+{
+    free(executando.contexto->uc_stack.ss_sp);
+    free(executando.contexto);
+}
 /* Inicia o esclonador de processos, deve ser chamado apenas na função
    main() após as chamadas de mproc_create() */
 void scheduler()
@@ -176,10 +181,14 @@ void scheduler()
 
     getcontext(&scheduler_context);
     while(pcb_fim()>=0){
+        executando.estado = EXEC;
         swapcontext(&scheduler_context,executando.contexto);
+        if (executando.estado == EXEC)
+            destroi_exec();
         printf("\nFila prio 1:\n");imprime_fifo(&fifo_aptos[1]);//debug
         printf("\nFila prio 2:\n");imprime_fifo(&fifo_aptos[2]);//debug
         printf("\nFila bloqs :\n");imprime_fifo(&fifo_bloqs);   //debug
-        
+
         }
 }
+
