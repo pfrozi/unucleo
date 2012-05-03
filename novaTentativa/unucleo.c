@@ -71,7 +71,6 @@ int        pidCount;                                                            
  int pcb_fim()
  {
     PCB pcb_ready;
-    troca_bloq_to_ready();                                                                 // Processos que estavam esperando o processo em execução são liberados aqui
 
     if(pcb_caller(&pcb_ready)<0)
         return -1;
@@ -180,6 +179,7 @@ void mproc_yield(void)
 
 void destroi_exec()
 {
+    troca_bloq_to_ready();                                                                 // Processos que estavam esperando o processo em execução são liberados aqui
     free(executando.contexto->uc_stack.ss_sp);
     free(executando.contexto);
 }
@@ -194,9 +194,9 @@ void scheduler()
         swapcontext(&scheduler_context,executando.contexto);
         if (executando.estado == EXEC)
             destroi_exec();
-        //printf("\nFila prio 1:\n");imprime_fifo(&fifo_aptos[1]);//debug
-        //printf("\nFila prio 2:\n");imprime_fifo(&fifo_aptos[2]);//debug
-        //printf("\nFila bloqs :\n");imprime_fifo(&fifo_bloqs);   //debug
+        printf("\nFila prio 1:\n");imprime_fifo(&fifo_aptos[1]);//debug
+        printf("\nFila prio 2:\n");imprime_fifo(&fifo_aptos[2]);//debug
+        printf("\nFila bloqs :\n");imprime_fifo(&fifo_bloqs);   //debug
 
         }
 }
