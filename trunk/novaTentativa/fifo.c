@@ -134,6 +134,19 @@ int busca_pcb(FIFO_DESC* f, int pid, PCB* result)
     return -1;
 
 }
+int existe_pcb(FIFO_DESC* f, int pid)
+{
+    FIFO_PCB* Atual = f->prim;
+
+    if(Atual != NULL) {
+        do {
+            if(Atual->pcb.pid==pid)
+                return pid;
+            Atual = Atual->prox;
+        }while(Atual != NULL);
+    }
+    return -1;
+}
 
 int remove_pcb(FIFO_DESC* f, int pid)
 {
