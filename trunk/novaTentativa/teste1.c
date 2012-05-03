@@ -28,8 +28,10 @@ void teste2(void *arg) {
 
     for(;i>0;i--) {
         printf("Sou o teste 2 de prio 1 e vou executar mais %d vezes\n",i);
-        printf("CALL: teste2() -> mproc_join(4)\n");
-        mproc_join(4);
+        if(i==15){
+            printf("CALL: teste2() -> mproc_join(4)\n");
+            mproc_join(4);
+        }
     }
 
     printf("FIM: teste2()\n");
