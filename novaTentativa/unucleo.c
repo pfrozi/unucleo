@@ -150,6 +150,11 @@ int mproc_create(int prio, void *(*start_routine)(void*), void *arg)
 int mproc_join(int pid)
 {
 
+    if( (existe_pcb(&fifo_aptos[P_MEDIA],pid)<0) &&                                                   // verifica fila de aptos
+        (existe_pcb(&fifo_aptos[P_BAIXA],pid)<0) &&
+        (existe_pcb(&fifo_bloqs,pid)<0) )                                                             // Verifica Fila de bloqueados
+               return -1;
+
     executando.pid_wait = pid;
     executando.estado = BLOQ;
     insere_fifo(&fifo_bloqs,executando);
