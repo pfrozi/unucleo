@@ -50,22 +50,29 @@ void teste5()
 }
 
 int main() {
-
+    printf("INICIO: main()\n");
+    
     int init  = 0;
     int proc1 = 0;
     int proc2 = 0;
     int proc3 = 0;
     int proc4 = 0;
 
+    printf("CALL: main() -> libsisop_init()\n");
     init = libsisop_init();
 
+    printf("CALL: main() -> mproc_create(1,(void*)teste1,0)\n");
     proc1 = mproc_create(1,(void*)teste1,0);
+    printf("CALL: main() -> mproc_create(1,(void*)teste2,0)\n");
     proc2 = mproc_create(1,(void*)teste2,0);
+    printf("CALL: main() -> mproc_create(1,(void*)teste3,0)\n");
     proc3 = mproc_create(1,(void*)teste3,0);
 
     printf("result INIT: %d\npid TESTE1: %d\npid TESTE2: %d TESTE3: %d TESTE4: %d\n\n",init,proc1,proc2,proc3,proc4);
 
     printf("\n\ninit : INICIEI!!\n");
     scheduler();
+    
+    printf("FIM: main()\n");
     return init;
 }
