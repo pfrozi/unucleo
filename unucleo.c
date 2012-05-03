@@ -11,7 +11,7 @@ FIFO_DESC   fifo_bloqs;                                                         
 
 /* Variáveis globais que armazenam informções do unucleo */
 ucontext_t scheduler_context;                                                   // Armazena o contexto do escalonador para retorno das funções
-int        pidCount;                                                            // Número de processos ativos
+int        pid_count;                                                            // Número de processos ativos, usado para gerar o próximo PID
 
 /* Funções reservadas do sistema operacional - INICIO */
 //Verifica se tinha algum processo esperando o processo que esta executando, retorna -1 se não houver ninguem
@@ -72,7 +72,7 @@ int pcb_fim(void) {
    Retorna "0" se inicializou corretamente ou "-1" caso contrário. */
 int libsisop_init(void) {
     int i;
-    pidCount = 1;
+    pid_count = 1;
 
     cria_fifo(&fifo_bloqs);                                                     // Cria uma fila de bloqueados
     for(i = 0;i<PRIORIDADES-1;i++)                                              // Cria uma fila para cada prioridade
@@ -89,24 +89,22 @@ int libsisop_init(void) {
    Retorna o PID (Process Identification) do processo ou "-1" em caso de erro. */
 int mproc_create(int prio, void *(*start_routine)(void*), void *arg) {
     PCB pcb_add;
-    int pid;
 
     if (prio<1 || prio>2) {
  		printf("Sem permissão para inserir processos com prioridade de sistema (0). \n");
 		return -1;
 	}
-	pcb_add.pid = pidCount;
-    pidCount++;
+	pcb_add.pid = pid_count;
+    pid_count++;
 
 	pcb_add.prio= prio;
 	pcb_add.pid_wait = -1;
     
     printf("CALL: mproc_create() -> getcontext(&pcb_fifo->contexto)\n");
     getcontext(&pcb_add.contexto);
-    pcb_add.contexto.uc_link = &scheduler_context;
+    pcb_add.contexto.uc_link           = &scheduler_context;
     pcb_add.contexto.uc_stack.ss_sp    = (char *)malloc(SIGSTKSZ*sizeof(char));
 	pcb_add.contexto.uc_stack.ss_size  = SIGSTKSZ*sizeof(char);
-	pcb_add.contexto.uc_stack.ss_flags = 0;
 
     printf("CALL: mproc_create() -> makecontext(&pcb_fifo->contexto, (void (*)(void)) start_routine, 1, arg)\n");
 	makecontext(&pcb_add.contexto, (void (*)(void)) start_routine, 1, arg);
@@ -120,7 +118,7 @@ int mproc_create(int prio, void *(*start_routine)(void*), void *arg) {
 /* O processo retorna o controle ao escalonador (cedência voluntária)
    e vai para o final da fila de APTOS para executar. */
 void mproc_yield(void) {
-    PCB prox_pcb,ant_pcb;
+    PCB prox_pcb, ant_pcb;
 
     if (pcb_caller(&prox_pcb)>-1) {
         insere_fifo(&fifo_aptos[executando.prio], executando);
@@ -133,7 +131,7 @@ void mproc_yield(void) {
 /* Aguarda até que o processo identificado por "pid" seja encerrado.
    Retorna "0" se funcionou corretamente ou "-1" caso contrário. */
 int mproc_join(int pid) {
-//    PCB prox_pcb,ant_pcb;
+//    PCB prox_pcb, ant_pcb;
 //
 //    if (pcb_caller(&prox_pcb)>-1) {
 //        executando.pid_wait = pid;
@@ -156,7 +154,7 @@ int mproc_join(int pid) {
    main() após as chamadas de mproc_create() */
 void scheduler(void) {
     getcontext(&scheduler_context);
-    printf("\npassou antes\n");
+    printf("SCHEDULER\n");
     if(pcb_fim()<0)
         return;
     //while(pcb_fim()>=0) {

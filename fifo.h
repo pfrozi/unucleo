@@ -35,6 +35,6 @@ void imprime_pcb(PCB p);
 void imprime_fifo(FIFO_DESC* f);
 
 /* Funções para manipulação das filas em função dos PCBs */
-int has_waiter(FIFO_DESC* f, int pid);               //verifica se a fila possui algum elemento com pid_wait=pid, se sim, retorna o pid desse cara, senão retorna -1
-int busca_pcb(FIFO_DESC* f, int pid, PCB* result);   //percorre fila buscando PCB com  pid=pid, resultado é armazenado em result
-int remove_pcb(FIFO_DESC* f, int pid);               //remove pcb especifico
+int has_waiter(FIFO_DESC* f, int pid);                                          //verifica se a fila possui algum elemento com pid_wait=pid, se sim, retorna o pid desse cara, senão retorna -1
+int busca_pcb(FIFO_DESC* f, int pid, PCB* result);                              //percorre fila buscando PCB com  pid=pid, resultado é armazenado em result
+int remove_pcb(FIFO_DESC* f, int pid);                                          //remove pcb especifico
