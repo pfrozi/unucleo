@@ -1,5 +1,4 @@
-/* Identificador do estado do processo, na implementação será
-   usada uma estrutura diferente para cada um dos estados */
+
 #define APTO 0
 #define EXEC 1
 #define BLOQ 2
@@ -14,7 +13,7 @@
 
 /* Inicializa o unucleo.
    Retorna "0" se inicializou corretamente ou "-1" caso contrário. */
-int libsisop_init(void);
+int libsisop_init();
 
 /* Cria um novo processo de usuário com a prioridade "prio".
    A prioridade deve ser 1 ou 2 senão a função retorna erro.
@@ -30,6 +29,4 @@ void mproc_yield(void);
    Retorna "0" se funcionou corretamente ou "-1" caso contrário. */
 int mproc_join(int pid);
 
-/* Inicia o esclonador de processos, deve ser chamado apenas na função 
-   main() após as chamadas de mproc_create() */
-void scheduler(void);
+void scheduler();

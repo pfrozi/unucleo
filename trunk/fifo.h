@@ -6,6 +6,7 @@ typedef struct PCB {
     int prio;
     int estado;
     int pid_wait;                   // Processo que ele aguardará o termino
+    char all_stack[SIGSTKSZ];
 } PCB;
 
 typedef struct FIFO_PCB {
