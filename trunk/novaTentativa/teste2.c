@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-//#include "fifo.h"
 #include "unucleo.h"
 
 void teste4();
