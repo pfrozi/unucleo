@@ -60,7 +60,11 @@ int        pidCount;                                                            
         remove_fifo(&fifo_aptos[P_BAIXA]);
         }
     else
+    {
+        if(fifo_bloqs != NULL)
+            printf("SisopERRO - VOCE GEROU UM DEADLOCK!");
         return -1;                                                                  // todas as filas estão vazias
+    }
     return pcb_result->pid;
  }
 
@@ -118,7 +122,7 @@ int mproc_create(int prio, void *(*start_routine)(void*), void *arg)
 
     if (prio<1 || prio>2)
 	{
- 		printf("Sem permissão para inserir processos com prioridade de sistema (0). \n");
+ 		printf("\nSem permissão para inserir processos com prioridade de sistema (0). \n");
 		return -1;
 	}
 	pcb_add.pid  = pidCount;
