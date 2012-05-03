@@ -5,122 +5,94 @@
 
 void teste4();
 
-void teste1()
-{
+void teste1() {
+    printf("INICIO: teste1()\n");
+
     int i = 30;
-    int p = mproc_create(2,(void*)teste4,0);
 
-    for(;i>0;i--)
-    {
-        printf("Sou o teste 1 de prio 1 e vou executar mais %d vezes (chamei %d)\n",i,p);
-        if (i==15)
-        {
-            printf("\n  fiz join!  \n");
-            mproc_join(3);
-        }
+    printf("CALL: teste1() -> mproc_create(2,(void*)teste4,0)\n");
+    int p4 = mproc_create(2,(void*)teste4,0);
+    printf("RET: teste1() -> mproc_create(2,(void*)teste4,0) = %d\n", p4);
+
+    for(;i>0;i--) {
+        printf("Sou o teste 1 de prio 1 e vou executar mais %d vezes (chamei %d)\n", i, p4);
     }
 
+    printf("FIM: teste1()\n");
 }
-void teste2()
-{
+
+void teste2() {
+    printf("INICIO: teste2()\n");
+
     int i = 25;
-    for(;i>0;i--)
-    {
-        printf("Sou o teste 2 de prio 1 e vou executar mais %d vezes\n",i);
-        if (i==5)
-        {
-            printf("\n  fiz Yield!  \n");
-            mproc_yield();
 
-        }
+    for(;i>0;i--) {
+        printf("Sou o teste 2 de prio 1 e vou executar mais %d vezes\n",i);
+        printf("CALL: teste2() -> mproc_join(4)\n");
+        mproc_join(4);
     }
+
+    printf("FIM: teste2()\n");
 }
-void teste5();
-void teste3()
-{
+
+void teste3() {
+    printf("INICIO: teste3()\n");
+
     int i = 20;
-    int p = mproc_create(2,(void*)teste5,0);
-    for(;i>0;i--)
-    {
-        printf("Sou o teste 3 de prio 1 e vou executar mais %d vezes (chamei %d)\n",i,p);
+
+    for(;i>0;i--) {
+        printf("Sou o teste 3 de prio 1 e vou executar mais %d vezes\n",i);
     }
+
+    printf("FIM: teste3()\n");
 }
-void teste4()
-{
+
+void teste4() {
+    printf("INICIO: teste4()\n");
+
     int i = 15;
-    for(;i>0;i--)
-    {
+
+    for(;i>0;i--) {
         printf("Sou o teste 4 de prio 2 e vou executar mais %d vezes\n",i);
     }
+
+    printf("FIM: teste4()\n");
 }
-void teste6()
-{
+
+void teste5() {
+    printf("INICIO: teste5()\n");
+
     int i = 15;
-    for(;i>0;i--)
-    {
-        printf("Sou o teste 6 de prio 2 e vou executar mais %d vezes\n",i);
+
+    for(;i>0;i--) {
+        printf("Sou o teste 5 de prio 2 e vou executar mais %d vezes\n",i);
     }
+
+    printf("FIM: teste5()\n");
 }
-void teste5()
-{
-    int i = 15;
-    int p = mproc_create(1,(void*)teste6,0);
-    for(;i>0;i--)
-    {
-        printf("Sou o teste 5 de prio 2 e vou executar mais %d vezes(chamei %d)\n",i,p);
-    }
-}
-void teste7()
-{
-    int i = 9;
-    for(;i>0;i--)
-    {
-        printf("Sou o teste 7 de prio 1 e vou executar mais %d vezes\n",i);
-    }
-}
-void teste8()
-{
-    int i = 8;
-    for(;i>0;i--)
-    {
-        printf("Sou o teste 8 de prio 1 e vou executar mais %d vezes\n",i);
-    }
-}
-void teste9()
-{
-    int i = 7;
-    for(;i>0;i--)
-    {
-        printf("Sou o teste 9 de prio 1 e vou executar mais %d vezes\n",i);
-    }
-}
-void teste10()
-{
-    int i = 6;
-    for(;i>0;i--)
-    {
-        printf("Sou o teste 10 de prio 1 e vou executar mais %d vezes\n",i);
-    }
-}
+
 int main() {
+    printf("INICIO: main()\n");
+    
+    printf("CALL: main() -> libsisop_init()\n");
+    int init = libsisop_init();
+    printf("RET: main() -> libsisop_init() = %d\n", init);
 
-    int init  = 0;
-    int proc1,proc2,proc3,proc7,proc8,proc9,proc10;
+    printf("CALL: main() -> mproc_create(1,(void*)teste1,0)\n");
+    int p1 = mproc_create(1,(void*)teste1,0);
+    printf("RET: main() -> mproc_create(1,(void*)teste1,0) = %d\n", p1);
 
-    init = libsisop_init();
+    printf("CALL: main() -> mproc_create(1,(void*)teste2,0)\n");
+    int p2 = mproc_create(1,(void*)teste2,0);
+    printf("RET: main() -> mproc_create(1,(void*)teste2,0) = %d\n", p2);
 
-    proc1 = mproc_create(1,(void*)teste1,0);
-    proc2 = mproc_create(1,(void*)teste2,0);
-    proc3 = mproc_create(1,(void*)teste3,0);
-    proc7 = mproc_create(1,(void*)teste7,0);
-    proc8 = mproc_create(1,(void*)teste8,0);
-    proc9 = mproc_create(1,(void*)teste9,0);
-    proc10 = mproc_create(1,(void*)teste10,0);
+    printf("CALL: main() -> mproc_create(1,(void*)teste3,0)\n");
+    int p3 = mproc_create(1,(void*)teste3,0);
+    printf("RET: main() -> mproc_create(1,(void*)teste3,0) = %d\n", p3);
 
-
-    printf("%d %d %d %d %d %d %d %d\n\n",init,proc1,proc2,proc3,proc7,proc8,proc9,proc10);
-
-    printf("\n\ninit : INICIEI!!\n");
+    printf("CALL: main() -> scheduler()\n");
     scheduler();
+    
+    printf("FIM: main()\n");
     return init;
 }
