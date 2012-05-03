@@ -1,13 +1,12 @@
 /******************************************************************************
- * teste3.c
+ * teste4.c
  ******************************************************************************
  * OBJETIVO:
- * Verificar a execução correta dos processos de acordo com as prioridades
+ * Verificar se os processos não estão sendo criados com prioridades indevidas
  ******************************************************************************
  * FUNCIONAMENTO:
- * Cria MAX_PROC_I processos com a mproc_create(), processos com PID ímpar 
- * recebem prioridade 1 (devem ser executados primeiro), processos com PID par
- * recebem prioridade 2 (devem ser executados depois
+ * Cria 1 processo com prioridade < 1 e outro processo com prioridade > 2.
+ * Deve retornar erro.
  ******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
@@ -35,16 +34,15 @@ int main() {
      * Criação dos Processos *
      *************************/  
      
-    int p[MAX_PROC_I];
-    int i;
-    int prioridade;
+    int p1, p2;
     
-    for(i=0; i<MAX_PROC_I; i++) {
-        prioridade = (i % 2) + 1;
-        printf("CREATE: main() -> mproc_create(%d, (void*)teste, &p[%d])", prioridade, i);
-        p[i] = mproc_create(prioridade, (void*)teste, &p[i]);
-        printf(" - RET: %d\n", p[i]);
-    }
+    printf("CREATE: main() -> mproc_create(0, (void*)teste, &p1)");
+    p1 = mproc_create(0, (void*)teste, &p1);
+    printf(" - RET: %d\n", p1);
+    
+    printf("CREATE: main() -> mproc_create(5, (void*)teste, &p2)");
+    p2 = mproc_create(5, (void*)teste, &p2);
+    printf(" - RET: %d\n", p2);
     /* Fim Criação dos Processos */
 
 

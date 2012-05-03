@@ -31,7 +31,7 @@ void teste2() {
     for(;i>0;i--) {
         printf("Sou o teste 2 de prio 1 e vou executar mais %d vezes\n",i);
         if (i==5) {
-            printf("CALL: teste2() -> mproc_yeld()\n");
+            printf("CALL: teste2() -> mproc_yield()\n");
             mproc_yield();
         }
     }
