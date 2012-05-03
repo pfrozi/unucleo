@@ -30,4 +30,6 @@ void mproc_yield(void);
    Retorna "0" se funcionou corretamente ou "-1" caso contrário. */
 int mproc_join(int pid);
 
+/* Inicia o esclonador de processos, deve ser chamado apenas na função
+   main() após as chamadas de mproc_create() */
 void scheduler();
