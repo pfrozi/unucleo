@@ -3,15 +3,15 @@
 #include "fifo.h"
 #include "unucleo.h"
 
-void teste4();
+void teste4(void *arg);
 
-void teste1() {
+void teste1(void *arg) {
     printf("INICIO: teste1()\n");
 
     int i = 30;
 
     printf("CALL: teste1() -> mproc_create(2,(void*)teste4,0)\n");
-    int p4 = mproc_create(2,(void*)teste4,0);
+    int p4 = mproc_create(2,(void*)teste4,NULL);
     printf("RET: teste1() -> mproc_create(2,(void*)teste4,0) = %d\n", p4);
 
     for(;i>0;i--) {
@@ -21,7 +21,7 @@ void teste1() {
     printf("FIM: teste1()\n");
 }
 
-void teste2() {
+void teste2(void *arg) {
     printf("INICIO: teste2()\n");
 
     int i = 25;
@@ -35,7 +35,7 @@ void teste2() {
     printf("FIM: teste2()\n");
 }
 
-void teste3() {
+void teste3(void *arg) {
     printf("INICIO: teste3()\n");
 
     int i = 20;
@@ -47,7 +47,7 @@ void teste3() {
     printf("FIM: teste3()\n");
 }
 
-void teste4() {
+void teste4(void *arg) {
     printf("INICIO: teste4()\n");
 
     int i = 15;
@@ -59,7 +59,7 @@ void teste4() {
     printf("FIM: teste4()\n");
 }
 
-void teste5() {
+void teste5(void *arg) {
     printf("INICIO: teste5()\n");
 
     int i = 15;
@@ -79,15 +79,15 @@ int main() {
     printf("RET: main() -> libsisop_init() = %d\n", init);
 
     printf("CALL: main() -> mproc_create(1,(void*)teste1,0)\n");
-    int p1 = mproc_create(1,(void*)teste1,0);
+    int p1 = mproc_create(1,(void*)teste1,NULL);
     printf("RET: main() -> mproc_create(1,(void*)teste1,0) = %d\n", p1);
 
     printf("CALL: main() -> mproc_create(1,(void*)teste2,0)\n");
-    int p2 = mproc_create(1,(void*)teste2,0);
+    int p2 = mproc_create(1,(void*)teste2,NULL);
     printf("RET: main() -> mproc_create(1,(void*)teste2,0) = %d\n", p2);
 
     printf("CALL: main() -> mproc_create(1,(void*)teste3,0)\n");
-    int p3 = mproc_create(1,(void*)teste3,0);
+    int p3 = mproc_create(1,(void*)teste3,NULL);
     printf("RET: main() -> mproc_create(1,(void*)teste3,0) = %d\n", p3);
 
     printf("CALL: main() -> scheduler()\n");
