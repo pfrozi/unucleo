@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "fifo.h"
+//#include "fifo.h"
 #include "unucleo.h"
 
 void teste4();
@@ -74,10 +74,18 @@ void teste5() {
 int main() {
     printf("INICIO: main()\n");
     
+    /****************
+     * Inicializaão *
+     ****************/
     printf("CALL: main() -> libsisop_init()\n");
     int init = libsisop_init();
     printf("RET: main() -> libsisop_init() = %d\n", init);
-
+    /* Fim Inicialização */
+    
+    
+    /*************************
+     * Criação dos Processos *
+     *************************/  
     printf("CALL: main() -> mproc_create(1,(void*)teste1,0)\n");
     int p1 = mproc_create(1,(void*)teste1,0);
     printf("RET: main() -> mproc_create(1,(void*)teste1,0) = %d\n", p1);
@@ -89,9 +97,15 @@ int main() {
     printf("CALL: main() -> mproc_create(1,(void*)teste3,0)\n");
     int p3 = mproc_create(1,(void*)teste3,0);
     printf("RET: main() -> mproc_create(1,(void*)teste3,0) = %d\n", p3);
+    /* Fim Criação dos Processos */
 
+
+    /**************************
+     * Chamada do Escalonador *
+     **************************/      
     printf("CALL: main() -> scheduler()\n");
     scheduler();
+    /* Fim Chamada do Escalonador */
     
     printf("FIM: main()\n");
     return init;
