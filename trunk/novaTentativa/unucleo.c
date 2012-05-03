@@ -61,7 +61,7 @@ int        pidCount;                                                            
         }
     else
     {
-        if(fifo_bloqs != NULL)
+        if(fifo_bloqs.prim != NULL)
             printf("SisopERRO - VOCE GEROU UM DEADLOCK!");
         return -1;                                                                  // todas as filas estão vazias
     }
