@@ -180,6 +180,6 @@ void scheduler()
         printf("\nFila prio 1:\n");imprime_fifo(&fifo_aptos[1]);//debug
         printf("\nFila prio 2:\n");imprime_fifo(&fifo_aptos[2]);//debug
         printf("\nFila bloqs :\n");imprime_fifo(&fifo_bloqs);   //debug
-        printf("\npassou depois\n");
+        
         }
 }
