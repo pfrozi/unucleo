@@ -95,7 +95,7 @@ void imprime_fifo(FIFO_DESC *f) {
 */
 
 
-/*PEDROF
+/*
     FUNCOES ADICIONAIS - INICIO
 */
 
