@@ -132,7 +132,7 @@ int mproc_create(int prio, void *(*start_routine)(void*), void *arg)
     getcontext(pcb_add.contexto);
 
 
-	ini_make(pcb_add.contexto);//,pcb_add.all_stack);
+	ini_make(pcb_add.contexto);
 	getcontext(pcb_add.contexto);
 
 	pcb_add.contexto->uc_stack.ss_sp    = all_stack[pidCount];
