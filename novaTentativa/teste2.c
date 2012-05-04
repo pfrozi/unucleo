@@ -10,7 +10,7 @@
  * p1 aguarda p3
  * p2 faz cedencia voluntaria
  * p3 cria p5
- *
+ * p5 cria p6
  ******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
