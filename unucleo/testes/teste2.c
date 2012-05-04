@@ -28,7 +28,7 @@ void teste1(void *arg) {
     printf("RET: teste1() -> mproc_create(2,(void*)teste4,0) = %d\n", p);
 
     for(;i>0;i--) {
-        printf("Sou o teste 1 de prio 1 e vou executar mais %d vezes (chamei %d)\n",i,p);
+        printf("Sou o teste 1 de prio 1 e vou executar mais %d vezes (chamei func 4 pid:%d)\n",i,p);
         if (i==15) {
             printf("CALL: teste1() -> mproc_join(3)\n");
             mproc_join(3);
@@ -65,7 +65,7 @@ void teste3(void *arg) {
     printf("RET: teste3() -> mproc_create(2,(void*)teste5,0) = %d\n", p);
 
     for(;i>0;i--) {
-        printf("Sou o teste 3 de prio 1 e vou executar mais %d vezes (chamei %d)\n",i,p);
+        printf("Sou o teste 3 de prio 1 e vou executar mais %d vezes (chamei func 5 pid:%d)\n",i,p);
     }
 
     printf("FIM: teste3()\n");
@@ -103,7 +103,7 @@ void teste5(void *arg) {
     printf("RET: teste5() -> mproc_create(2,(void*)teste6,0) = %d\n", p);
 
     for(;i>0;i--) {
-        printf("Sou o teste 5 de prio 2 e vou executar mais %d vezes(chamei %d)\n",i,p);
+        printf("Sou o teste 5 de prio 2 e vou executar mais %d vezes(chamei func 6 pid:%d)\n",i,p);
     }
 
     printf("FIM: teste5()\n");
