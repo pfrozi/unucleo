@@ -26,7 +26,7 @@ void teste1(void *arg) {
     printf("RET: teste1() -> mproc_create(2,(void*)teste4,0) = %d\n", p4);
 
     for(;i>0;i--) {
-        printf("Sou o teste 1 de prio 1 e vou executar mais %d vezes (chamei %d)\n", i, p4);
+        printf("Sou o teste 1 de prio 1 e vou executar mais %d vezes (chamei func 4 pid:%d)\n", i, p4);
     }
 
     printf("FIM: teste1()\n");
