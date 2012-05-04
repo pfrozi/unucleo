@@ -8,7 +8,7 @@
  * Cria os processos p1, p2, p3.
  * p1 deve aguardar p2.
  * p2 deve aguardar p3.
- * p3 deve agaurdar p1 gerando o deadlock.
+ * p3 deve aguardar p1 gerando o deadlock.
  ******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
