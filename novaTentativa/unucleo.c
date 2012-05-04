@@ -194,9 +194,9 @@ void scheduler()
         swapcontext(&scheduler_context,executando.contexto);
         if (executando.estado == EXEC)
             destroi_exec();
-        printf("\nFila prio 1:\n");imprime_fifo(&fifo_aptos[1]);//debug
-        printf("\nFila prio 2:\n");imprime_fifo(&fifo_aptos[2]);//debug
-        printf("\nFila bloqs :\n");imprime_fifo(&fifo_bloqs);   //debug
+//        printf("\nFila prio 1:\n");imprime_fifo(&fifo_aptos[1]);//debug
+//        printf("\nFila prio 2:\n");imprime_fifo(&fifo_aptos[2]);//debug
+//        printf("\nFila bloqs :\n");imprime_fifo(&fifo_bloqs);   //debug
 
         }
 }
