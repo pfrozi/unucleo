@@ -12,7 +12,6 @@
  ******************************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
-#include "fifo.h"
 #include "../include/unucleo.h"
 
 void teste4(void *arg);
